@@ -19,4 +19,12 @@
 ##### Encabezado 5
 ###### Encabezado 6
 
-> estop es una cita
+> esto es una cita
+
+
+`esto es un bloque de codigo`
+---
+esto es un bloque
+de cogigo
+para ver listas
+---
