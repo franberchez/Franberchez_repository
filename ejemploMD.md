@@ -42,6 +42,7 @@ para ver listas
 
 1. **Nombre del administrador:**
 `git config --global user.name "Francisco Berchez Moreno"`
+
 2. **Correo electronico:**
 `git config --global user.email i72bemof@uco.es`
 3. **Editor de texto:**
