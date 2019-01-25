@@ -1,9 +1,0 @@
-Archivo inicial zfc
-
-esta es la diferencia
-
-
-cambio en desarrollo
-
-
-conflicto en master
