@@ -1,3 +1,3 @@
-# Repositorio1
+# FranBerhez_Repository
 
-este es el repistorio del grupo 2
+Este es el repositorio de practicas de Segundo de Carrera del Grado en Ingeniería Informática
