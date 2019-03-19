@@ -24,6 +24,11 @@ char serverQueue[100];
 //Prototipo de funcion
 void funcionLog(char *);
 
+//Estructura de la cola
+struct mq_attr attr;
+
+
+
 // Función que procesará EL FINAL
 void finPrograma(int value);
 
