@@ -27,7 +27,9 @@ void funcionLog(char *);
 //Estructura de la cola
 struct mq_attr attr;
 
-
+//Inicializanos las variables de la cola
+attr.mq_maxmsg = 10; // Maximo numero de mensajes
+attr.mq_mqgsize = MAX_SIZE; // Maximo tamaño de un mensaje
 
 // Función que procesará EL FINAL
 void finPrograma(int value);
@@ -46,19 +48,19 @@ int main(int argc, char **argv)
 	sprintf(serverQueue, "%s-%s", SERVER_QUEUE, getenv("USER"));
 
 	// Abrir la cola del servidor
-	mq_server = mq_open(serverQueue, O_WRONLY);
+	mq_server = mq_open(serverQueue, O_CREAT | O_WRONLY, 0644, &attr);
 	if( mq_server == (mqd_t)-1)
 	{
-     	perror("Error al abrir la cola del servidor");
-      exit(EXIT_FAILURE);
+     		perror("Error al abrir la cola del servidor");
+		exit(EXIT_FAILURE);
 	}
 
 	// Abrir la cola del cliente
-	mq_client = mq_open(clientQueue, O_RDONLY); //abro la cola que voy a utilizar para leer
+	mq_client = mq_open(clientQueue, O_CREAT | O_RDONLY, 0644, &attr); //abro la cola que voy a utilizar para leer
 	if( mq_client == (mqd_t)-1)
 	{
-    	perror("Error al abrir la cola del cliente");
-   	exit(EXIT_FAILURE);
+    		perror("Error al abrir la cola del cliente");
+   		exit(EXIT_FAILURE);
 	}
 
 	// flag que indica cuando hay que parar
