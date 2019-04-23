@@ -189,12 +189,26 @@ namespace ed
 
 		ArbolBinarioOrdenadoEnlazado ()
 		{
-			// TODO
+			this->_raiz = NULL;
+			this->_actual = NULL;
+			this->_padre = NULL;
+
+			#ifndef NDEBUG
+				assert(this->estaVacio());
+			#endif
 		}
 
 		ArbolBinarioOrdenadoEnlazado (const ArbolBinarioOrdenadoEnlazado<G>& a)
 		{
-			// TODO
+			this->_raiz = a._raiz;
+			this->_actual = a._actual;
+			this->_padre = a._padre;
+
+			// *this = a; AUNQUE ESTE NO LO TENGO MUY CLARO ASI QUE PROBARLO
+
+			#ifndef NDEBUG
+				assert(*this == a);
+			#endif
 		}
 
 		~ArbolBinarioOrdenadoEnlazado ()
@@ -204,7 +218,7 @@ namespace ed
 			cout << "Destructor Usado \n";
 		}
 
-		ArbolBinarioOrdenadoEnlazado &operator=(const ArbolBinarioOrdenadoEnlazado& a)
+		ArbolBinarioOrdenadoEnlazado &operator=(const ArbolBinarioOrdenadoEnlazado& a) // DONDE LECHES ESTA EN EL DOCUMENTO
 		{
 			// TODO
 		}
@@ -312,17 +326,20 @@ namespace ed
 
 		void recorridoPreOrden (OperadorNodo<G> &operador) const
 		{
-			// TODO
+			// Lo que hacemos es aplicar el recorrido PreOrden que ya tenemos para un nodo empezando por la raiz
+			this->_raiz->recorridoPreOrden(operador);
 		}
 
 		void recorridoPostOrden (OperadorNodo<G> &operador) const
 		{
-			// TODO
+			// Lo que hacemos es aplicar el recorrido PostOrden que ya tenemos para un nodo empezando por la raiz
+			this->_raiz->recorridoPostOrden(operador);
 		}
 
 		void recorridoInOrden (OperadorNodo<G> &operador) const
 		{
-			// TODO
+			// Lo que hacemos es aplicar el recorrido InOrden que ya tenemos para un nodo empezando por la raiz
+			this->_raiz->recorridoInOrden(operador);
 		}
 
 		bool buscar(const G& x) // TENGO QUE REVISAR LAS PRECONDICIONES Y LAS POSTCONDICIONES
@@ -388,24 +405,47 @@ namespace ed
 
 		bool estaVacio() const
 		{
-			// TODO
-			return false;
+			bool vacio = false;
+
+			// Con tan solo tener la raiz a NULL ya se que esta vacio
+			if(this->_raiz == NULL)
+			{
+				vacio = true;
+			}
+
+			return vacio;
 		}
 
 		G raiz() const
 		{
-			// TODO
+			#ifndef NDEBUG
+				assert(not estaVacio());
+			#endif
+
+			return this->_raiz;
 		}
 
 		bool existeActual() const
 		{
-			// TODO
+			#ifndef NDEBUG
+				assert(not estaVacio());
+			#endif
+
+			if(this->getActual() != NULL)
+			{
+				return true;
+			}
+
 			return false;
 		}
 
 		G actual() const
 		{
-			// TODO
+			#ifndef NDEBUG
+				assert(this->getActual() != NULL);
+			#endif
+
+			return this->getActual()->getInfo();
 		}
 
 		/*!@}*/
