@@ -1,0 +1,177 @@
+EJERCICIO 1
+
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ./ejercicio1.sh ejemploCarpeta/                                                      
+Tenemos 4 ficheros con extension .c y 5 ficheros con extension .h
+El fichero ejemploCarpeta/d1/audit.h tiene 463 lineas y 18221 caracteres
+El fichero ejemploCarpeta/d1/auditBackup.h tiene 463 lineas y 18221 caracteres
+El fichero ejemploCarpeta/d1/ecoc.h tiene 76 lineas y 2377 caracteres
+El fichero ejemploCarpeta/d1/auto_fs.h tiene 72 lineas y 2288 caracteres
+El fichero ejemploCarpeta/d1/compat.h tiene 17 lineas y 370 caracteres
+El fichero ejemploCarpeta/d2/prueba.c tiene 14 lineas y 233 caracteres
+El fichero ejemploCarpeta/d1/smo_routine.c tiene 8 lineas y 104 caracteres
+El fichero ejemploCarpeta/d1/svm_model_matlab.c tiene 6 lineas y 99 caracteres
+El fichero ejemploCarpeta/d1/d4/act_func.c tiene 5 lineas y 92 caracteres
+
+
+
+EJERCICIO 2
+
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ./ejercicio2.sh ejemploCarpeta/
+Nombre LongitudUsuario FechaModificacion FechaAcceso Tamano Bloques Permisos Ejecutable
+act_func.c;9;2019-04-21 19:03:03.412833000 +0200;1555866183;92;b;-rw-------;0
+svm_model_matlab.c;9;2019-04-21 19:03:04.466285000 +0200;1555866184;99;b;-rw-------;0
+smo_routine.c;9;2019-04-21 19:03:05.442185000 +0200;1555866185;104;b;-rw-------;0
+prueba.c;9;2019-04-21 19:03:05.898083000 +0200;1555866185;233;b;-rw-------;0
+compat.h;9;2019-04-21 19:03:05.264143000 +0200;1555866185;370;b;-rw-------;0
+ejemploSuid.sh;9;2019-04-21 19:03:07.086221000 +0200;1555866186;483;b;-rw-------;0
+bcache.cpp;9;2019-04-21 19:03:03.622264000 +0200;1555866183;1233;b;-rw-------;0
+auto_fs.h;9;2019-04-21 19:03:05.044264000 +0200;1555866184;2288;b;-rw-------;0
+ecoc.h;9;2019-04-21 19:03:04.870367000 +0200;1555866184;2377;b;-rw-------;0
+fedora.png;9;2019-04-21 19:02:59.480450000 +0200;1555866179;2386;b;-rw-------;0
+debian.png;9;2019-04-21 19:02:59.040554000 +0200;1555866178;2626;b;-rw-------;0
+a2.out;9;2019-04-21 19:02:59.236636000 +0200;1555866179;7275;b;-rwx------;1
+a.out;9;2019-04-21 19:03:06.078331000 +0200;1555866185;7275;b;-rwx------;1
+eje2;9;2019-04-21 19:03:02.677602000 +0200;1555866182;7275;b;-rwx------;1
+centos.png;9;2019-04-21 19:03:00.148576000 +0200;1555866180;8215;b;-rw-------;0
+pirates.jpg;9;2019-04-21 19:03:01.700473000 +0200;1555866181;9836;b;-rw-------;0
+libhandle.so.1.0.3;9;2019-04-21 19:03:03.150521000 +0200;1555866183;10760;b;-rw-------;0
+Linus_torvalds.jpg;9;2019-04-21 19:03:01.250573000 +0200;1555866181;17670;b;-rw-------;0
+auditBackup.h;9;2019-04-21 19:03:04.249012000 +0200;1555866184;18221;b;-rw-------;0
+audit.h;9;2019-04-21 19:03:04.696415000 +0200;1555866184;18221;b;-rw-------;0
+Logo_uco.gif;9;2019-04-21 19:03:00.778371000 +0200;1555866180;20005;b;-rw-------;0
+devocion-administrador-de-sistemas.png;9;2019-04-21 19:03:01.918406000 +0200;1555866181;21613;b;-rw-------;0
+HD.png;9;2019-04-21 19:02:59.724815000 +0200;1555866179;36710;b;-rw-------;0
+libsysfs.so.2;9;2019-04-21 19:03:03.893083000 +0200;1555866183;38644;b;-rw-------;0
+richard-stallman.jpg;9;2019-04-21 19:03:02.114725000 +0200;1555866182;42999;b;-rw-------;0
+logo_eps_grande.jpg;9;2019-04-21 19:03:00.589197000 +0200;1555866180;43161;b;-rw-------;0
+raid0.png;9;2019-04-21 19:02:59.923202000 +0200;1555866179;50683;b;-rw-------;0
+elinfiernoexiste.jpg;9;2019-04-21 19:03:01.517933000 +0200;1555866181;119847;b;-rw-------;0
+libglib-2.0.so.0;9;2019-04-21 19:03:06.887085000 +0200;1555866286;822344;b;-rw-------;0
+
+
+EJERCICIO 3
+
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ./ejercicio3.sh ejemploCarpeta/
+Creando las carpetas pequenos, medianos y grandes...
+Copiando archivos...
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls
+ejemploCarpeta  ejercicio2.sh  ejercicio4.sh  ejercicio6.sh  medianos
+ejercicio1.sh   ejercicio3.sh  ejercicio5.sh  grandes        pequenos
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls medianos/
+auditBackup.h                           HD.png              Linus_torvalds.jpg   raid0.png
+audit.h                                 libhandle.so.1.0.3  logo_eps_grande.jpg  richard-stallman.jpg
+devocion-administrador-de-sistemas.png  libsysfs.so.2       Logo_uco.gif
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls grandes/
+elinfiernoexiste.jpg  libglib-2.0.so.0
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls pequenos/
+a2.out      a.out      bcache.cpp  compat.h    ecoc.h  ejemploSuid.sh  pirates.jpg  smo_routine.c
+act_func.c  auto_fs.h  centos.png  debian.png  eje2    fedora.png      prueba.c     svm_model_matlab.c
+
+
+EJERCICIO 4
+
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ cd ejemploCarpeta/
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega/ejemploCarpeta$ ../ejercicio4.sh 
+El directorio actual tiene 0 archivos
+cc0gobas
+f82macaa
+i72alllj
+i72bemof
+i72hepoj
+r42jucaa
+tonin
+¿Que caracter quieres contar? d
+El caracter d aparace 21 veces en nombres de ficheros o carpetas contenidos en la carpeta actual
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega/ejemploCarpeta$ ../ejercicio4.sh 
+El directorio actual tiene 0 archivos
+cc0gobas
+f82macaa
+i72bemof
+i72hepoj
+r42jucaa
+tonin
+¿Que caracter quieres contar? T
+El caracter T aparace 2 veces en nombres de ficheros o carpetas contenidos en la carpeta actual
+
+
+EJERCICIO 5
+
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls
+ejemploCarpeta  ejercicio2.sh  ejercicio4.sh  ejercicio6.sh  medianos
+ejercicio1.sh   ejercicio3.sh  ejercicio5.sh  grandes        pequenos
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ./ejercicio5.sh medianos/
+Comprimiendo archivos...
+Moviendo archivos a la carpeta /Copia...
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls
+Copia           ejercicio1.sh  ejercicio3.sh  ejercicio5.sh  grandes   pequenos
+ejemploCarpeta  ejercicio2.sh  ejercicio4.sh  ejercicio6.sh  medianos
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls Copia/
+copia-i72bemof-1555866779.tar.gz
+
+
+EJERCICIO 6
+
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ./ejercicio6.sh ejemploCarpeta/
+Generando el listado de la carpeta /home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/ sobre el fichero ejemploCarpeta/.html...
+¡Terminado!
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ ls                                                                                                                
+Copia           ejemploCarpeta.html  ejercicio2.sh  ejercicio4.sh  ejercicio6.sh  medianos
+ejemploCarpeta  ejercicio1.sh        ejercicio3.sh  ejercicio5.sh  grandes        pequenos
+i72bemof@NEWTS:~/2_carrera/pas/p3/entrega$ cat ejemploCarpeta.html 
+<html>
+<head>
+<title>Listado del directorio ejemploCarpeta/</title>
+</head>
+<body>
+<style type="text/css">
+	body { font-family: sans-serif;}
+</style>
+<h1>Listado del directorio ejemploCarpeta/</h1>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images</strong></li>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/logos</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/logos/Logo_uco.gif</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/logos/logo_eps_grande.jpg</li></ul>
+</ul>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Carpeta1</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Carpeta1/richard-stallman.jpg</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Carpeta1/pirates.jpg</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Carpeta1/elinfiernoexiste.jpg</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Carpeta1/devocion-administrador-de-sistemas.png</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Carpeta1/Linus_torvalds.jpg</li></ul>
+</ul>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria/raid0.png</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria/fedora.png</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria/debian.png</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria/a2.out</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria/centos.png</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/images/Teoria/HD.png</li></ul>
+</ul>
+</ul>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d2</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d2/libglib-2.0.so.0</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d2/prueba.c</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d2/a.out</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d2/ejemploSuid.sh</li></ul>
+</ul>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d3</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d3/disco2.png</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d3/eje2</li></ul>
+</ul>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/audit.h</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/libhandle.so.1.0.3</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/smo_routine.c</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/auto_fs.h</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/auditBackup.h</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/ecoc.h</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/svm_model_matlab.c</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/compat.h</li></ul>
+<ul><li><strong>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/d4</strong></li>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/d4/bcache.cpp</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/d4/act_func.c</li></ul>
+<ul><li>/home/i72bemof/2_carrera/pas/p3/entrega/ejemploCarpeta/d1/d4/libsysfs.so.2</li></ul>
+</ul>
+</ul>
+</body>
+</html>
