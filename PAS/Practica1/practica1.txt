@@ -1,0 +1,448 @@
+EJERCICIOS PRACTICA 1
+
+EJE 1
+La carpetas que tenemos son:
+
+bin: Contiene los scripts y códigos requeridos para que se ejeute el servidor. Dentro de dicha carpeta encontraremos el
+archivo apachectl que es el archivo que necesitaremos para arrancar el servidor apache y el que se utiliza para verificar la modificaciones que realizemos en el archivo de configuracion, asi como para parar apache.
+
+build:
+
+cgi-bin: es una carpeta en la que se contienen aquellos archivos que se necesitan para que se le muestre al usuario archivos ya sean de audio, video, texto, imagenes... Cuando este realiza una peticion cgi (como consecuencia de una peticion cgi se obtine un objeto mime que es este objeto de audio, video, texto, imagenes...)
+
+conf: es la carpeta de configuracion del servidor apache y dentro de ella encontraremos un archivo importante llamado httpd.conf que es la carpeta en la que realizaremos la modificaciones pertinentes de apache.
+
+error: es una carpeta en la que estan contenidos todos los errores que nos pueden surgir al utilizar html de forma incorrecta además de contener un archivo que lo muestre en varios idiomas.
+
+htdocs: en esta carpeta se guarda el index de http el cual se abrira en nuestro navegador para mostrarnos si nuestro servidor apache se inició correctamente
+
+icons: contiene iconos del servidor apache que sirven para html
+
+include: es una carpeta donde estan contenidos todos los ficheros de cabecera de apache en las que se enecuentran las definiciones de las funciones que necesita utilizar apache
+
+lib: creo que es una carpeta en la que están contenidas todas las librerias de las que debe disponer apache
+
+logs:
+
+man:
+
+manual:
+
+modules:
+
+	INICIAR APACHE: ./apachectll
+	APAGAR APACHE: ./apachedctl -k stop
+	REINICIAR APACHE: ./apachectl -k restart
+
+
+EJE 2  
+
+Primero me meto en la carpeta httpd y dentro de ella entro en la carpeta bin donde encontraré el archivo apachectl, lo ejecutare con ./apachectl
+La instrucción que tenemos que añadir en $HOME/.bash_logout que será killall -s KILL httpd se encunetra en el archivo oculto del home .bash_logout que accedo
+con ls -a y con el gedit intoduciria (gedit .bash_logout) la instrucción, lo que pasa que ya viene introducida
+
+Da un error al intentar abrir el fichero conscretamente este:
+
+	AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.16.210.2. Set the 'ServerName' directive globally to suppress this message
+	(13)Permission denied: AH00072: make_sock: could not bind to address 0.0.0.0:80
+	no listening sockets available, shutting down
+	AH00015: Unable to open logs
+
+
+
+EJE 3
+
+Vamos a analizar el error que nos da, si el puerto especificado en la directiva listen del fichero de configuración es el que viene pos defecto, es decir, el puerto 80 (o cualquier otro puerto por debajo del 1024), entonces es necesario tener privilegios de usuario root y como en los ordenadores de la uco carecemos de dichos permisos necesitaremos cambiar dicho puerto de escucha para poder iniciar Apache, para ello nos vamos a archivo de congifiguracion de apache httpd.conf y buscamos la expresion del puesrto de escucha listen y la cambiamos de 80 a 8080 quedandose de la siguiente manera (Listen 8080).
+A continuación, ejecutamos en el terminal el comando ./apachectl restart para confirmar los cambios hechos en el archivo de configuracion y recibimos los siguiente en el terminal:
+
+	AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.16.210.2. Set the 'ServerName' directive globally to suppress this message
+	httpd not running, trying to start
+
+Esto nos quiere decir que lo que tenemos que hacer es cambiar el nombre del servidor al idicado en el ejercicio (localhost:8080), por lo que volvemos al archivo de configuración de httpd y buscamos el servername en el que sale comentado que en el caso de que no tengamos un nombre en el DNS que lo intoduzcamos justamente abajo, quedando el servername como el mencionado en el ejercicio:
+
+	# If your host doesn't have a registered DNS name, enter its IP address here.
+	#
+	ServerName localhost:8080
+
+Una vez hacemos esto volvemos ha ejecutar el comando en el terminal ./apachectl restart para recargar y el fichero de configuracion y aplicar los cambios, una vez hecho esto volvemos a ejecutar el comando ./apachectl y obtenemos lo siguienete en el terminal:
+
+	httpd (pid 3191) already running
+
+Una vez hecho esto abriremos una nueva pagina en el navegador y escribiremos como url localhost:8080 y se nos abrirá una pagina que dice it works
+
+
+
+EJE 4
+
+Las paginas webs que se publican a través del servidor web Apache se enecuentran alojadas en una carpeta del mismo equipo. La ruta de dicha carpata debe aparecer en el archivo de configuracion (httpd.conf) usando la directiva DocumentRoot
+
+En un pricipio tenemos esto:
+
+	DocumentRoot "/home/i72bemof/httpd/htdocs"
+	<Directory "/home/i72bemof/httpd/htdocs">
+
+Y lo cambiamos a esto:
+
+	DocumentRoot "/home/i72bemof/httpd-docs"
+	<Directory "/home/i72bemof/httpd-docs">
+
+Una vez lo cambiamos tendremos que volver a escribir en el terminal ./apachectl restart el cual nos dara error en caso de que en nuestra carpeta home no tengamos una carpeta que se llame httpd-docs ya que si no nos que no se puede leer un archivo que no hemos creado:
+
+	AH00526: Syntax error on line 218 of /home/i72bemof/httpd/conf/httpd.conf:
+	DocumentRoot '/home/i72bemof/httpd-docs/' is not a directory, or is not readable
+
+Una vez hemos creado la carpeta y cambiado el directorio del DocumentRoot, nos dice que incluyamos en dicha carpeta una serie de documentos para nuestro servidor web, pero en un inicio lo unico que tendremos que crear un archivo en concreto que es el que nos dice el ejercicio el cual llamaremos index.html, que es el archivo que tomará para abrir el navegador desde el servidor localhost:8080
+
+El cambiar el directorio del DocumentRoot significa que si ahora nosotros en el terminal ponemes el servidor:
+localhost:8080 nos mostrará en el navegador el curso en el que estamos y nuestra asignatura preferida.
+
+ADJUNTAR UNA IMAGEN SI PUEDO.
+
+
+EJE 5
+
+En un inicio tenemos en nuestro archivo de configuración (httpd.conf) como DirectoryIndex lo siguiente:
+
+	DirectoryIndex index.html
+
+Lo que haremos sera añadir una nueva alterantiva a dicho DirectoryIndex la cual será idex2.html y probar si funciona:
+
+	DirectoryIndex index.html
+	DirectoryIndex index2.html
+
+También lo puedo poner de la siguiente manera:
+
+	DirectoryIndex index.html index2.html
+
+Una vez ejecutamos en el terminal la instrucción ./apachectl restart vemos que no se genera ningún error al tenr 2 index, las prioridades que se generan al tener varios index son simpre el primero que tenemos escrito en caso de que no lo especifiquemos, es decir, si lo tenemos en una sola linea nos abrirá el primer index empezando por la izquierda sea el que sea, y en caso de ponerlos uno debajo del otro, cogera el primer index empezando por arriba sea el que sea.
+
+
+EJE 6
+
+Lo unico que tenemos que hacer es que dentro de nuestra carpeta httpd-docs creamos una nueva carpeta a la cual llamaremos newFolder y en la cual para probarlo vamos a introducir un index cualquiera.
+La directiva que tendríamos que modificar sería la de DocumentRoot, en la cual si ahora queremos que en vez de que coja los index de la carpeta httpd-docs queremos que los coja de la carpeta newFolder, la nueva directiva quedaría de la siguiente manera:
+
+	DocumentRoot "/home/i72bemof/httpd-docs/newFolder"
+	<Directory "/home/i72bemof/httpd-docs/newFolder">
+
+Así siempre que ejecutemos en el navegador el servidor localhost:8080 se nos abrirá el index de newFolder, en caso de no camabiar la directiva para acceder al index de dicha carpeta en nuestro navegador accederemos a través de localhost:8080/newFolder
+
+Para mejorar el aspecto visual del listado de los lsitados de apache, primerotenemos que saber como podemos conseguir que nos salga dicho listado en el navegador, el cual se consigue no poniendo ningun index para que se abara cuando pongamos localhost:8080 para ello el fichero de configuración lo podemos dejar de la sigueinete manera:
+
+<IfModule dir_module>
+DirectoryIndex
+    # DirectoryIndex index.html index2.html
+    # DirectoryIndex index.html
+</IfModule>
+
+
+A la hora de mejorar su aspecto viual lo que haremos será identificar primero que hay dentro del rchivo httpd-autoindex.conf que como podremos observar la funcion que tiene es mejorar el aspecto visual de dicho listado añadiendo entre otras cosas iconos, para conseguir que salgan dichos iconos lo que tenemos que es en el mismo archivo httpd.conf descometar un apartado que es el que esta relacionado con el autoindex pasando el archivo de conf de esto:
+
+	# Fancy directory listings
+	# Include conf/extra/httpd-autoindex.conf
+
+a esto:
+
+	# Fancy directory listings
+	Include conf/extra/httpd-autoindex.conf
+
+Y ahora unaa vez pongamos en nuestro navegador localhost:8080 nos saldrá el listado de index pero con un mejor aspecto visual.
+
+
+EJE 7
+
+El nombre sel servidor se encuentra en el archivo de configuración en el cual aparece como Servername el cual si lo buscamos veremos que lo hemos modificado a localhost:8080, siendo el nombre del servidor localhost y 8080 será el puerto de escucha por el que es el servidor va a admitir solicitudes web.
+
+EJE 8
+
+Si buscamos el usario y el grupo de apache en el archivo de configuración del mismo (httpd.conf) lo que encontramos es lo siguiente:
+
+<IfModule unixd_module>
+#
+# If you wish httpd to run as a different user or group, you must run
+# httpd as root initially and it will switch.  
+#
+# User/Group: The name (or #number) of the user/group to run httpd as.
+# It is usually good practice to create a dedicated user and group for
+# running httpd, as with most system services.
+#
+User daemon
+Group daemon
+
+La directiva de usuario establece la ID del usuario como el servidor que repondera a la solicitudes. Pero para utilizar esta directiva, el servidor debe ejecutarse incialmente como root. En caso de iniciarlo como usuario no root, no podrá cambiar al usuario con privilegios menores, en su lugar, continuará ejecutándose como usuario original.
+Debido a ciertos inconvenientes que se generan al ejecutar el servidor con usuario no root, es recomendable que se configure un nuevo usuario y grupo específico para ejecutar el servidor.
+
+La directiva de grupo establece el el grupo bajo el servidor el seridor que reponde las peticiones. Para usar esta directiva, el server debe ejecutarse incialmente como root, en caso de ejecutarlo como no root, dará un fallo cuando queramos especificar un grupo, y en su lugar continuará ejecutandose como el grupo del usuario original. Se recomienda que configure un nuevo grupo específicamente para ejecutar el servidor.
+
+
+EJE 9
+
+
+Telnet puede utilizarse para intentar conectarse aun servidor en un puerto determinado. En general sirve para determinar si algo está escuchando en el lado remoto, lo que confrima que se puede acceder al servidor remoto y que un servidor se esá ejecutando y está vonculado al puerto desde el cual se ha solicitado.
+
+La solución de problemas de HTTP mediante telnet es una excelente manera de revisar exactamente que se devuelve a su navegador durante una solicitud web para una URL en particular. Esto le permite ver encabezados y recopialar otra información relacionada con el servidor web.
+
+	PRIMERO ENCONTRAMOS UNA SALIDA EN LA QUE SE NOS MUESTRA POR PANTALLA QUE ESTA INTENTANDO CONECTARSE AL LOCALHOST
+
+i72bemof@NEWTS:~$ telnet localhost 8085
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+
+	LUEGO TENEMOS UNA ENTRADA EN LA QUE INTRODUCIREMOS UNA PETICION EN LA QUE SOLICITAMOS UN DOCUMENTO COMPLETO POR LO QUE UTILIZAMOS GET EN VEZ HEAD EL SOLO SOLICITA LAS CABECERAS
+
+GET / HTTP/1.0
+
+	OBTENEMOS UNA SALIDA POR PANTALLA DE LA PETICION QUE ACABAMOS DE REALIZAR
+
+HTTP/1.1 200 OK
+Date: Thu, 21 Feb 2019 19:22:06 GMT
+Server: Apache/2.4.38 (Unix)
+Content-Length: 1117
+Connection: close
+Content-Type: text/html;charset=ISO-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+ <head>
+  <title>Index of /</title>
+ </head>
+ <body>
+<h1>Index of /</h1>
+  <table>
+   <tr><th valign="top"><img src="/icons/blank.gif" alt="[ICO]"></th><th><a href="?C=N;O=D">Name</a></th><th><a href="?C=M;O=A">Last modified</a></th><th><a href="?C=S;O=A">Size</a></th><th><a href="?C=D;O=A">Description</a></th></tr>
+   <tr><th colspan="5"><hr></th></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="index.html">index.html</a>             </td><td align="right">2019-02-18 12:23  </td><td align="right">155 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/text.gif" alt="[TXT]"></td><td><a href="index2.html">index2.html</a>            </td><td align="right">2019-02-18 13:02  </td><td align="right"> 54 </td><td>&nbsp;</td></tr>
+<tr><td valign="top"><img src="/icons/folder.gif" alt="[DIR]"></td><td><a href="newFolder/">newFolder/</a>             </td><td align="right">2019-02-18 13:21  </td><td align="right">  - </td><td>&nbsp;</td></tr>
+   <tr><th colspan="5"><hr></th></tr>
+</table>
+</body></html>
+Connection closed by foreign host.
+i72bemof@NEWTS:~$ 
+
+
+En caso de que realicemos una segunda petición (HOLA) en este caso obtenemos lo siguiente:
+
+	PRIMERO ENCONTRAMOS UNA SALIDA EN LA QUE SE NOS MUESTRA POR PANTALLA QUE ESTA INTENTANDO CONECTARSE AL LOCALHOST
+
+i72bemof@NEWTS:~$ telnet localhost 8085
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+
+	A CONTINUACION INTRODUCIMOS NUESTRA PETICION HOLA
+
+HOLA / HTTP/1.0
+
+	OBTENEMOS UNA SALIDA COMO ESTA
+
+HTTP/1.1 501 Not Implemented
+Date: Thu, 21 Feb 2019 19:46:52 GMT
+Server: Apache/2.4.38 (Unix)
+Allow: GET,POST,OPTIONS,HEAD,TRACE
+Content-Length: 192
+Connection: close
+Content-Type: text/html; charset=iso-8859-1
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>501 Not Implemented</title>
+</head><body>
+<h1>Not Implemented</h1>
+<p>HOLA to / not supported.<br />
+</p>
+</body></html>
+Connection closed by foreign host.
+i72bemof@NEWTS:~$
+
+En el que como vemos nos da un fallo en que dicha peticion no está implementada y que solo están permitidas las peticiones GET,POST,OPTIONS,HEAD,TRACE por lo que se nos cierra la conexión con el servidor
+
+
+EJE 10
+
+Tenemos que buscar la directiva ErrorDocument, en la cual nos comenta que en caso de error Apache nos deja configurar una de las siguientes cosas:
+
+	1. Mostrar un simple mensaje de error codificado
+	2. Mostrar un mensaje personalizado
+	3. Redireccionar a una ruta-URl local para manejar el problema o el error
+	4. Redireccionar hacia una URL externa para manejar el problema o el error
+
+Las opciones 2 y 4 son las configuradas usando la directiva ErrorDocument, a la cual le dsigue una respuesta de HTTP y una URL o mensaje.
+Dichas URLs pueden comenzar con una barra (/) para rutas web locales (está relacionado con la directiva documentRoot).
+
+Hay que tener en cuenta que cuando se especifica un ErrorDocument que apunta a una URL remota, Apache HTTP Server enviará una redirección al cliente para indicarle donde encontrar el documento, incluso si el docuemnto termina estando en el mismo servidor. Además si utiliza una URL remota en un ErrorDocument 401, el cliente no sabrá pedirle al usuario una contraseña, ya que no recibirá el código de estado 401. Por lo tanto si usa una directiva ErrorDocument 401, debe hacer referencia a un documento local, por eso si hacemos referencia a un documento local que no exista saltará dicho error con el mensaje que le hayamos especificado.
+
+Para la realizacion en el archivo de configuración de Apache buscamos la directiva ErrorDocument 401 las descomentamos y le cambiamos el mendaje que nos proporcionara a URI not found.
+
+ErrorDocument 404 "URI not found"
+
+Si queremos comprobar que funciona, es tan simple como abrir el navegador y escribir localhost:8080/(un directorio que no exista)
+
+Podemos especificar un fichero .html de error, ya que de hecho en el servidor Apache encontramos un directorio que hace referencia a los errores que pueden especificarse. ¿¿¿¿¿DIRECTIVA ERRORLOG?????
+
+A la hora de modificar el error 501 vamos a crear uno nuevo con la directiva ErrorDocument quedando el fichero de configuración de Apache de la siguiente manera.
+
+ErrorDocument 501 "Method not implemented"
+
+
+EJE 11
+
+
+Tenemos el acces_log en la que el servidor almacena en el registro de acceso informaxión sobre todas las peticiones que procesa. La ubicación de del fichero registro y el contenido que se registra se pueden modificar con la directiva customLog. También podemos usar la directiva LogFormat para simplicar la selección de los contenidos que quiere que se incluyan en los registros.
+
+Tambien encontramos la directiva error log, que es el registro de errores del servidor. Apache enviará cualquier información de diagnóstico y registrará cualquier error que encuentre en al procesar peticiones al archivo de registro seleccionado. Es el primer lugar donde tiene que mirar cuando surja un problema al iniciar el servidor durante su operacción normal.
+
+El registro de errores se escribe nromalmente en un fichero cuyo nombre suele ser error_log que sen encuentra en nuestro caso en el directorio log junto con el fichero access_log
+
+		Ejemplo:
+
+[Wed Oct 11 14:32:52 2000] [error] [client 127.0.0.1] client denied by server configuration: /export/home/live/ap/htdocs/test
+
+El primer elemento de la entrada es la fecha y la hora del mensaje. El segundo elemento indica la gravedad del error que se ha producido. La directiva LogLevel se usa para controlar los tipos de errores que se envían al registro de errores según su gravedad. La tercera parte contiene la dirección IP del cliente que generó el error. Después de la dirección IP está el mensaje de error propiamente dicho, que en este caso indica que el servidor ha sido configurado para denegar el acceso a ese cliente. El servidor reporta también la ruta en el sistema de ficheros del documento solicitado.
+
+Ahora veamos cual es la ultima entrada que obtenemos en nuestros ficheros access_log y error_log despues de realizar un acceso normal:
+
+	- acces_log:
+		127.0.0.1 - - [02/Mar/2019:12:49:17 +0100] "GET / HTTP/1.0" 200 1117
+
+	- error_log:
+		[Sat Mar 02 12:48:49.276148 2019] [core:notice] [pid 25319:tid 4148266752] AH00094: Command line: '/home/i72bemof/httpd/bin/httpd'
+
+Como podemos observar no tenemos ningun tipo de advertencia ya que no hemos hecho ningun acceso no permitido, veamos ahora que pasa si hacemos un acceso incorrecto:
+
+	- access_log:
+		127.0.0.1 - - [02/Mar/2019:12:53:07 +0100] "HOLA / HTTP/1.0" 501 22
+
+	-error_log:
+		[Sat Mar 02 12:53:07.978000 2019] [core:error] [pid 25321:tid 4095716160] [client 127.0.0.1:46132] AH00135: Invalid method in request HOLA / HTTP/1.0
+
+Ahora si vemos que en el acceso hemos intentado introducir un método inválido por lo que se ha registrado en el fichero error_log como un error.
+
+
+
+EJE 12
+
+
+La directiva de configuración redirect esta ubicada en el archivo de configuración de apache y tiene la siguiente estructura:
+Redirect /nombredeusuario http://equipo.ejemplo.com/~nombredeusuario/
+
+Si no se especifica un argumento, redirect envía un estatus temporal (por ejemplo: 302). En este caso se informa al cliente que el recurso disponible en /nombreusuario ha sido movido temporalmente a la dirección http://equipo.ejemplo.com/~nombredeusuario/.
+
+Las sentencias redirect deben especidicar la ruta completa del recurso a la cual se redirigirá a continuación el nombre del dominio. Estas sentencias también, deben incluir la URL completa de la nueva ubicación del recurso:
+
+Tenemos diferentes formas de confirgurar dicha directiva como son:
+	1. Redirect permanent /nombredeusuario http://equipo.ejemplo.com/~nombredeusuario/
+	2. Redirect temp /nombredeusuario http://equipo.ejemplo.com/~nombredeusuario/
+	3. Redirect seeother /nombredeusuario http://equipo.ejemplo.com/~nombredeusuario/
+	4. Redirect gone /nombredeusuario
+
+La primera redirección "permanent" le dice al cliente que este recurso ha sido movido permanentemente, lo cual se corresponde con el estatus 301 de HTTP, el estatus "temp" es el comportamiento pedeterminado, especificando que la redirección solo es temporal, esto se corresponde con el estatus 302 de HTTP. El estatus "seeother" encía una señal estatus 303 HTTP que indica que el recurso solicitado ha sifo reemplazaod por otro recurso. Por último, el estatus "gone" le indica al cliente que el recurso ha sido eliminado permanentemente, esto envía el estatus 410 de HTTP, como un alternativa al estatus 404 que indica no disponible. En el caso de una redirección gone se debe omitir la URL final.
+
+Para realizar la redirección de la página de google no iremos al archivo de configuarción de Apache y buscaremos la directiva Redirect y al dejaremos de la siguente forma:
+
+    # Redirect permanent /foo http://www.example.com/bar
+    Redirect permanent /google http://www.uco.es
+
+Una vez la hayamos cambiado realizaremos un ./apachectl restar para confirmar los cambios y a continuación comprobaremos en el navegador que cuando pongamos localhost:8080/google se nos abrirá la página de la uco.
+
+
+EJE 13
+
+
+<VirtualHost> y </VitrualHost> son usadas para agrupar directivas que serán aplicadas solo para una virtual host partivular. Cuando el servidor recibe una petición de un documento para un virtual host partivular, esta utiliza la configuración de directivas que están agrupadas dentro de la seccion <VirtualHost>, un ejemplo de la creación de virtual host es el siguiente:
+
+	
+	<VirtualHost 10.1.2.3>
+		ServerAdmin webmaster@host.example.com
+		DocumentRoot /www/docs/host.example.com
+		ServerName host.example.com
+		ErrorLog logs/host.example.com-error_log
+		TransferLog logs/host.example.com-access_log
+	</VirtualHost> 
+
+
+Nosotros lo unico que no vamos a hacer es especificar el ServerAdmin puesto que no nos va resultar necesario, especificaremos la ruta con el documentRoot para saber donde buscar en nuestro caso los archivos index, estableceremos un ServerName para identificar a cada virtual host, en caso de no especificar el ServerName, el servidor intentará deducir el nombre del host realizando una búsqueda inversa en la dirección IP. Por último para tener ficheros los diferentes para cada virtual host lo que haré será definir para cada uno de ellos un ficheros log de acceso y error con las directivas CustomLog y ErrorLog y guardare dichos archivos en el directorio logs.
+
+Una vez seguido estos estos pasos en el configuraremos los virtual hosts en el archivo de configuración de Apache de la siguiente forma:
+
+<VirtualHost 172.16.210.16:8085>
+    DocumentRoot /home/i72bemof/httpd-docs/newFolder
+    ServerName 172.16.210.16:8085
+    ErrorLog logs/ip-error.log
+    CustomLog logs/ip-access.log common
+</VirtualHost>
+
+De manera que si ahora nosotros en nuestro navegador introducimos la ip de dicha maquina y (:8085) tendremos acceso a la carpeta newFolder, y además se nos actualizarán los ficheros ip-access.log e ip-error.log guardados en la carpeta logs de Apache
+
+
+
+EJE 14
+
+Haz que el servidor web sirva toda la documentación de Apache. Para ello, habilita la configuración del manual de Apache (extra/httpd-manual.conf) y los módulos que necesite. Explica las distintas líneas que aparecen en dicha configuración, incluyendo el significadode las expresiones regulares.
+
+En el fichero de configuración de Apache encontramos lo siguiente:
+
+	# Local access to the Apache HTTP Server Manual
+	#Include conf/extra/httpd-manual.conf
+
+Lo que vamos a hacer es descomentarlo:
+
+	# Local access to the Apache HTTP Server Manual
+	Include conf/extra/httpd-manual.conf
+
+Para obtener la documentación extra veremeos que si lo intentamos realizar de golpe obtendremos el siguiente error:
+
+	i72bemof@NEWTS:~/httpd/bin$ ./apachectl restart
+		AH00526: Syntax error on line 36 of /home/i72bemof/httpd/conf/extra/httpd-manual.conf:
+		Invalid command 'LanguagePriority', perhaps misspelled or defined by a module not included in the server configuration
+	i72bemof@NEWTS:~/httpd/bin$ 
+
+Por lo que será recomendable seguir la ruta marcada en dicho include hasta encontrar el fichero httpd-manual.conf en el cual veremos que los modulos requeridos para que dicha función pueda funcionar son los sigueinetes módulos:
+	1. mod_alias
+	2. mod_authz_core
+	3. mod_authz_host
+	4. mod_setenvif
+	5. mod_negotiation (que en nuestro caso es el único que no se encuentra activo por lo que lo descomentamos para cargarlo)
+
+Y ahora una vez activos todos estos módulos veremos como ya no nos dará un error al recargar el archivo de configuración
+
+
+---------------------------------------------------------TERMINAR------------------------------------------------------------
+
+EJE 15
+
+Para que el archivo .htaccess se interprete por Apache es necesario que, previamente, hayamos activado la directiva AllowOverride All sobre el directrio correspondiente que por defecto está a None en http.conf, para ello en el final de nuestro archivo de configuración de Apache lo que haremos sera introducir la localización del direcotorio donde queremos activar dicha directiva, que en nuestro caso es en la carpeta secretFolder, quedando nuestro archivo de confi¡guración de la siguiente manera.
+
+<Directory "/home/i72bemof/httpd-docs/secretFolder">
+    AllowOverride All
+</Directory>
+
+Una vez hecho esto lo que haremos será irnos a la carpeta bin del servidor de Apache para actualizar los usuarios y las contraseñas de aquellos usuarios que unicamente podran entrar a dicha carpeta, para ello desde el terminal introduciremos el siguiente comando ./htpasswd -c .htpasswd usuario, utilizando solo el -c para el primer usuario ya que esta indica que el fichero se cree de nuevo.
+Los usarios seran user1, user2 y user3 ambos 3 con la contraseña entra.
+
+Una vez hecho esto pulsaremos ctrl+h en la carpeta bin, para localizar el fichero .htpasswd y copiarlo dentro de nuestra carpeta secretFolder al igual que el archivo .htaccess.
+
+Por último para que nos pida la contaseña en caso de que queramos entrar a la carpeta secretFolder desde nuestro navergador lo que tendremos que hacer será incluir una seri de directivas en el fichero .htaccess que serán, las siguientes.
+
+------------------INCLUIRLAS MIRANDO EL TUNEL SSH----------------------
+
+Una vez hecho esto, cuando queramos acceder a dicha carpeta desde nuestro nnavegador se nos requerira un usuario y una contraseña.
+
+
+-----IMAGEN-----------
+
+
+EJE 16 // TERMINAR EN CASA
+
+172.16.210.16  IP DE UN ORDENADOR DE LA UCO
+
+
+<Directory />
+    AllowOverride None
+    Require all denied
+
+    Order Deny,Allow
+    Deny from all
+    Allow from 172.16.215.0/24
+</Directory>
