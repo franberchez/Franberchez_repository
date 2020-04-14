@@ -31,3 +31,13 @@
 #define POTENCIA				287
 #define CONCATENACION			288
 #define OPERADOR_FALLO			289
+#define MENOR_QUE				290
+#define MENOR_IGUAL_QUE			291
+#define MAYOR_QUE				292
+#define MAYOR_IGUAL_QUE			293
+#define IGUAL					294
+#define DISTINTO				295
+#define DISYUNCION_LOGICA		296
+#define CONJUNCION_LOGICA		297
+#define NEGACION_LOGICA			298
+#define COMENTARIO				299

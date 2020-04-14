@@ -20,6 +20,9 @@ numero				{digito}+(\.{digito}+)?(E[+\-]?{digito}+)?
 numero_fallo		{digito}+(,{digito}+)?(E[+\-]?{digito}+)?
 cadena				"'"([^'\\]|"\\\'")*"'"
 
+/* Se define un nuevo estado: ESTADO_COMENTARIO */
+%x ESTADO_COMENTARIO
+
 /***** Zona de las reglas *****/
 %%
 {espacios}   { /* no se hace nada */ ; }
@@ -82,29 +85,43 @@ cadena				"'"([^'\\]|"\\\'")*"'"
 
 "||"				{printf("\n Operador concatenacion: %s --> token %d\n", yytext, CONCATENACION);}
 
-"<"				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+"<"					{printf("\n Operador menor que: %s --> token %d\n", yytext, MENOR_QUE);}
 
-"<="				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+"<="				{printf("\n Operador menor igual que: %s --> token %d\n", yytext, MENOR_IGUAL_QUE);}
 
-">"				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+">"					{printf("\n Operador mayor que: %s --> token %d\n", yytext, MAYOR_QUE);}
 
-">="				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+">="				{printf("\n Operador mayor igual que: %s --> token %d\n", yytext, MAYOR_IGUAL_QUE);}
 
-"=="				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+"=="				{printf("\n Operador igual: %s --> token %d\n", yytext, IGUAL);}
 
-"<>"				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+"<>"				{printf("\n Operador distinto de: %s --> token %d\n", yytext, DISTINTO);}
 
-".o."				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+".o."				{printf("\n Operador disyuncion: %s --> token %d\n", yytext, DISYUNCION_LOGICA);}
 
-".y."				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+".y."				{printf("\n Operador conjucion: %s --> token %d\n", yytext, CONJUNCION_LOGICA);}
 
-".no."				{printf("\n Operador potencia: %s --> token %d\n", yytext, POTENCIA);}
+".no."				{printf("\n Operador negacion: %s --> token %d\n", yytext, NEGACION_LOGICA);}
+
+"(*"	      	{
+			  		BEGIN ESTADO_COMENTARIO; 
+			    	yymore(); 
+			    	printf("\n Comentario de mas de una linea \n");
+			  	}
+
+<ESTADO_COMENTARIO>"*)"		{ /* Fin del comentario: se vuelve al estado por defecto */
+						  		yymore();
+						  		printf("\n Comentario: %s --> token %d\n", yytext, COMENTARIO);
+						  		BEGIN 0; 
+				  			}      
+
+<ESTADO_COMENTARIO>.        {yymore();}
 
 [a-zA-Z0-9\_]+		{printf("\n Identificador no reconocido: %s --> token %d\n", yytext, ID_FALLO);}
 
 {numero_fallo}		{printf("\n Numero no reconocido: %s --> token %d\n", yytext, NUMERO_FALLO);}
 
-[_\.|\||?|=|!|¡|?|¿|%|@|€]+			{printf("\n Operador no reconocido: %s --> token %d\n", yytext, OPERADOR_FALLO);}
+[_\.|\||?|=|!|¡|?|¿|@|€|><|=>|=<]+	{printf("\n Operador no reconocido: %s --> token %d\n", yytext, OPERADOR_FALLO);}
 
 .           		;
 %%
