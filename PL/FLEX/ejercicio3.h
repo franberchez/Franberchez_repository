@@ -41,3 +41,6 @@
 #define CONJUNCION_LOGICA		297
 #define NEGACION_LOGICA			298
 #define COMENTARIO				299
+#define DERECHO					300
+#define IZQUIERDO				301
+#define FIN_SENTENCIA			302

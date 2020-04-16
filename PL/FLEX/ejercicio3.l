@@ -19,9 +19,10 @@ identificador		{letra}({letra}|{digito}|{guion}({letra}|{digito}))*
 numero				{digito}+(\.{digito}+)?(E[+\-]?{digito}+)?
 numero_fallo		{digito}+(,{digito}+)?(E[+\-]?{digito}+)?
 cadena				"'"([^'\\]|"\\\'")*"'"
+comentario_linea    "#"(.*)
 
 /* Se define un nuevo estado: ESTADO_COMENTARIO */
-%x ESTADO_COMENTARIO
+%x Q1 Q2 Q3 Q4 ESTADO_COMENTARIO
 
 /***** Zona de las reglas *****/
 %%
@@ -63,11 +64,13 @@ cadena				"'"([^'\\]|"\\\'")*"'"
 
 (?i:fin_para)		{printf("\n Palabra reservada: %s --> token %d\n", yytext, fin_para);}
 
+"'\\n'"				{printf("\n Cadena: %s --> token %d\n", yytext, CADENA);}
+
+{cadena}			{printf("\n Cadena: %s --> token %d\n", yytext, CADENA);}
+
 {identificador}		{printf("\n Identificador: %s --> token %d\n", yytext, ID);}
 
 {numero}			{printf("\n Numero: %s --> token %d\n", yytext, NUMERO);}
-
-{cadena}			{printf("\n Cadena: %s --> token %d\n", yytext, CADENA);}
 
 ":="				{printf("\n Operador asignacion: %s --> token %d\n", yytext, ASIGNACION);}
 
@@ -103,19 +106,24 @@ cadena				"'"([^'\\]|"\\\'")*"'"
 
 ".no."				{printf("\n Operador negacion: %s --> token %d\n", yytext, NEGACION_LOGICA);}
 
+{comentario_linea}	{printf("\n Comentario: %s --> token %d\n", yytext, COMENTARIO);}
+
 "(*"	      	{
-			  		BEGIN ESTADO_COMENTARIO; 
-			    	yymore(); 
-			    	printf("\n Comentario de mas de una linea \n");
+			  		/* Se activa el reconocimiento de un comentario */
+			  		BEGIN Q1;
+			  		yymore();
+			  		{printf("\n Comentario de mas de una linea --> token %d: \n", COMENTARIO);}
 			  	}
 
-<ESTADO_COMENTARIO>"*)"		{ /* Fin del comentario: se vuelve al estado por defecto */
-						  		yymore();
-						  		printf("\n Comentario: %s --> token %d\n", yytext, COMENTARIO);
-						  		BEGIN 0; 
-				  			}      
 
-<ESTADO_COMENTARIO>.        {yymore();}
+<Q1>"*)"     	{ /* Fin del comentario: se vuelve al estado por defecto */
+			  		yymore();
+			  		{printf("%s \n", yytext);}
+				  	BEGIN 0;
+				} 
+
+<Q1>. 			{yymore();}
+
 
 [a-zA-Z0-9\_]+		{printf("\n Identificador no reconocido: %s --> token %d\n", yytext, ID_FALLO);}
 
